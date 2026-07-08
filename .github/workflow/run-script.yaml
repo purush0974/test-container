@@ -1,0 +1,30 @@
+name: Run Script From PR Comment
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  run-script:
+    # Only run on PR comments and when the comment contains /run-script
+    if: >
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, '/run-script')
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: read
+
+    steps:
+      - name: Checkout PR code
+        uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ github.event.issue.number }}/head
+
+      - name: Make script executable
+        run: chmod +x scripts/run.sh
+
+      - name: Execute script
+        run: ./scripts/run.sh
