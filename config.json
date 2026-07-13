@@ -1,0 +1,6 @@
+{
+    "owner":"purushothaman",
+    "repo":"demo",
+    "token":"github_pat_xxxxxx",
+    "poll_interval":30
+}
